@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "158533391475",
+    "project_id": "micro-news-tutorial",
+    "storage_bucket": "micro-news-tutorial.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158533391475:android:d4bbe1429d0c0aed9f0606",
+        "android_client_info": {
+          "package_name": "com.example.micro_news_tutorial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhM3iV5AC1RmHur6cPWjhfFK7sb0BGmP4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

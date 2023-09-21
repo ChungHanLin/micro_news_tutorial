@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:micro_news_tutorial/views/screens/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,6 +25,25 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void _showAlertDialog(BuildContext context, String title, String message) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('關閉'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -93,7 +114,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: CupertinoButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        try {
+                          UserCredential user = await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  // 夾帶 email 文字框輸入文字
+                                  email: _emailController.text,
+                                  // 夾帶 password 文字框輸入文字
+                                  password: _passwordController.text);
+                          print('登入成功');
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'invalid-email') {
+                            _showAlertDialog(context, '登入失敗', '電子郵件格式錯誤');
+                          } else if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
+                            _showAlertDialog(context, '登入失敗', '帳號或密碼錯誤');
+                          } else {
+                            _showAlertDialog(context, '登入失敗', '發生錯誤');
+                          }
+                        }
+                      },
                       color: const Color.fromRGBO(255, 30, 84, 1),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 12),
@@ -106,7 +145,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: CupertinoButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, CupertinoPageRoute(
+                          builder: (context) {
+                            return const RegisterScreen();
+                          },
+                        ));
+                      },
                       color: CupertinoColors.systemGroupedBackground,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 12),

@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'views/screens/login_screen.dart';
 import 'views/screens/register_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:micro_news_tutorial/firebase_options.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 

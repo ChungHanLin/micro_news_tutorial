@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -26,6 +27,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  void _showAlertDialog(BuildContext context, String title, String message) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('關閉'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -97,7 +117,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(width: 4),
                 CupertinoButton(
                     padding: EdgeInsets.zero,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     child: const Text('前往登入',
                         style: TextStyle(
                             fontSize: 14,
@@ -107,7 +129,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(
                 width: double.infinity,
                 child: CupertinoButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (_passwordController.text !=
+                          _confirmPasswordController.text) {
+                        _showAlertDialog(
+                            context, '密碼不一致', '請檢查您的密碼與驗證密碼欄位內容是否正確');
+                        return;
+                      }
+                      try {
+                        UserCredential newUser = await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+                        print(newUser);
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'weak-password') {
+                          _showAlertDialog(
+                              context, '密碼強度不足', '為了您帳號的安全性，請使用強度較高的密碼');
+                        } else if (e.code == 'email-already-in-use') {
+                          _showAlertDialog(context, '信箱已被註冊',
+                              '該信箱已被註冊，您可以使用該信箱登入或使用其他信箱進行註冊');
+                        } else if (e.code == 'invalid-email') {
+                          _showAlertDialog(context, '信箱格式錯誤', '請檢查您的信箱格式是否正確');
+                        } else {
+                          _showAlertDialog(context, '註冊失敗', '請稍後再試');
+                        }
+                      }
+                    },
                     color: const Color.fromRGBO(255, 30, 84, 1),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
