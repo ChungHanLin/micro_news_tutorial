@@ -12,7 +12,12 @@
           "package_name": "com.example.micro_news_tutorial"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "158533391475-pflbs0n8richjtfhhpr7km9vdmjptq65.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDhM3iV5AC1RmHur6cPWjhfFK7sb0BGmP4"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "158533391475-pflbs0n8richjtfhhpr7km9vdmjptq65.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "158533391475-k4mb9vm1u7l1jff1u9ingph41m9tooo8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.microNewsTutorial"
+              }
+            }
+          ]
         }
       }
     }

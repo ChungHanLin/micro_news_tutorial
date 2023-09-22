@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:micro_news_tutorial/repositories/auth_repository.dart';
 import 'package:micro_news_tutorial/views/screens/register_screen.dart';
+import 'package:micro_news_tutorial/views/screens/forget_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,25 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
-  }
-
-  void _showAlertDialog(BuildContext context, String title, String message) {
-    showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: <CupertinoDialogAction>[
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('關閉'),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -104,7 +86,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                   CupertinoButton(
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, CupertinoPageRoute(
+                          builder: (context) {
+                            return const ForgetPasswordScreen();
+                          },
+                        ));
+                      },
                       child: const Text('忘記密碼？',
                           style: TextStyle(
                               fontSize: 14,
@@ -114,24 +102,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: CupertinoButton(
-                      onPressed: () async {
-                        try {
-                          UserCredential user = await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  // 夾帶 email 文字框輸入文字
-                                  email: _emailController.text,
-                                  // 夾帶 password 文字框輸入文字
-                                  password: _passwordController.text);
-                          print('登入成功');
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'invalid-email') {
-                            _showAlertDialog(context, '登入失敗', '電子郵件格式錯誤');
-                          } else if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
-                            _showAlertDialog(context, '登入失敗', '帳號或密碼錯誤');
-                          } else {
-                            _showAlertDialog(context, '登入失敗', '發生錯誤');
-                          }
-                        }
+                      onPressed: () {
+                        AuthRepository().signInWithEmailAndPassword(
+                            context: context,
+                            email: _emailController.text,
+                            password: _passwordController.text);
                       },
                       color: const Color.fromRGBO(255, 30, 84, 1),
                       padding: const EdgeInsets.symmetric(
@@ -198,7 +173,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(width: 24),
                   CupertinoButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      AuthRepository().signInWithGoogle(context: context);
+                    },
                     padding: const EdgeInsets.all(0),
                     child: Container(
                         padding: const EdgeInsets.all(16),
@@ -218,41 +195,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-    CupertinoPageScaffold(
-        child: Center(
-            child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          CupertinoButton(
-              onPressed: () {},
-              child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: const BoxDecoration(
-                      color: CupertinoColors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                      border: Border.fromBorderSide(
-                          BorderSide(color: CupertinoColors.systemGrey5))),
-                  child: Image.asset('assets/images/apple.png', height: 30))),
-          const SizedBox(width: 24),
-          CupertinoButton(
-            onPressed: () {
-              print('Google 登入');
-            },
-            child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: const BoxDecoration(
-                  color: CupertinoColors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.fromBorderSide(
-                      BorderSide(color: CupertinoColors.systemGrey5)),
-                ),
-                child: Image.asset('assets/images/google.png', height: 30)),
-          )
-        ]),
-      ]),
-    )));
   }
 }
