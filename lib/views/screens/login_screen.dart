@@ -173,41 +173,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-    CupertinoPageScaffold(
-        child: Center(
-            child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          CupertinoButton(
-              onPressed: () {},
-              child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: const BoxDecoration(
-                      color: CupertinoColors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                      border: Border.fromBorderSide(
-                          BorderSide(color: CupertinoColors.systemGrey5))),
-                  child: Image.asset('assets/images/apple.png', height: 30))),
-          const SizedBox(width: 24),
-          CupertinoButton(
-            onPressed: () {
-              print('Google 登入');
-            },
-            child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: const BoxDecoration(
-                  color: CupertinoColors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.fromBorderSide(
-                      BorderSide(color: CupertinoColors.systemGrey5)),
-                ),
-                child: Image.asset('assets/images/google.png', height: 30)),
-          )
-        ]),
-      ]),
-    )));
   }
 }
