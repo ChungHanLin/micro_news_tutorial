@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:micro_news_tutorial/views/screens/login_screen.dart';
 import 'package:micro_news_tutorial/views/screens/tab_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:micro_news_tutorial/firebase_options.dart';
@@ -15,11 +17,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
+    return CupertinoApp(
         debugShowCheckedModeBanner: false,
-        theme: CupertinoThemeData(
+        theme: const CupertinoThemeData(
           textTheme: CupertinoTextThemeData(
             navLargeTitleTextStyle: TextStyle(
+                inherit: false,
                 fontSize: 34,
                 fontWeight: FontWeight.w700,
                 fontFamily: 'GenSenRounded',
@@ -35,6 +38,14 @@ class MyApp extends StatelessWidget {
           primaryColor: Color.fromRGBO(255, 30, 84, 1),
           barBackgroundColor: CupertinoColors.white,
         ),
-        home: TabLayout());
+        home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return const TabLayout();
+              } else {
+                return const LoginScreen();
+              }
+            }));
   }
 }
