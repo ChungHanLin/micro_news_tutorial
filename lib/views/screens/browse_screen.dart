@@ -4,6 +4,8 @@ import 'package:micro_news_tutorial/models/news_source.dart';
 import 'package:micro_news_tutorial/repositories/news_category.dart';
 import 'package:micro_news_tutorial/repositories/news_source.dart';
 import 'package:micro_news_tutorial/views/screens/news_source_screen.dart';
+import 'package:micro_news_tutorial/views/widgets/news_category_button.dart';
+import 'package:micro_news_tutorial/views/widgets/news_source_grid_button.dart';
 
 class BrowseScreen extends StatefulWidget {
   const BrowseScreen({super.key});
@@ -28,27 +30,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         itemCount: categories.length,
         itemBuilder: (context, index) {
-          return Stack(alignment: Alignment.bottomLeft, children: [
-            Container(
-              decoration: BoxDecoration(
-                color: CupertinoColors.black,
-                image: DecorationImage(
-                  opacity: 0.7,
-                  image: NetworkImage(categories[index].cover),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
-              child: Text(categories[index].name,
-                  style: const TextStyle(
-                      fontSize: 20,
-                      color: CupertinoColors.white,
-                      fontWeight: FontWeight.w700)),
-            )
-          ]);
+          return NewsCategoryButton(category: categories[index]);
         });
   }
 
@@ -63,20 +45,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: CupertinoColors.black,
-                    image: DecorationImage(
-                      image: NetworkImage(sources[index].icon),
-                      fit: BoxFit.cover,
-                    ),
-                    border: Border.all(
-                        color: CupertinoColors.systemGrey4, width: 0.5),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
+                NewsSourceGridButton(source: sources[index]),
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(sources[index].name,
@@ -121,7 +90,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
                 return Center(child: Text('發生${snapshot.error}'));
-              } else if (snapshot.hasData) {
+              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 return _buildCategories(snapshot.data as List<NewsCategory>);
               } else {
                 return const Center(child: Text('沒有資料'));
@@ -167,7 +136,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasError) {
                     return Center(child: Text('發生${snapshot.error}'));
-                  } else if (snapshot.hasData) {
+                  } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                     return _buildSources(snapshot.data as List<NewsSource>);
                   } else {
                     return const Center(child: Text('沒有資料'));
