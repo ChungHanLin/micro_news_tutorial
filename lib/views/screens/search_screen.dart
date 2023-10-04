@@ -61,69 +61,87 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: CupertinoSearchTextField(
-              controller: _searchController,
-              placeholder: '搜尋關鍵字',
-              onSubmitted: (value) {
-                if (value == '') return;
-                Navigator.of(context).push(
-                  CupertinoPageRoute(
-                    builder: (context) => ResultScreen(query: value),
+    return CupertinoPageScaffold(
+      child: CustomScrollView(
+        slivers: [
+          const CupertinoSliverNavigationBar(
+              largeTitle: Text(
+                '搜尋',
+              ),
+              backgroundColor: CupertinoColors.white),
+          SliverToBoxAdapter(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: CupertinoSearchTextField(
+                    controller: _searchController,
+                    placeholder: '搜尋關鍵字',
+                    onSubmitted: (value) {
+                      if (value == '') return;
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => ResultScreen(query: value),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: Text('熱門關鍵字',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-          ),
-          SizedBox(
-            height: 64,
-            child: FutureBuilder(
-                future: _keywords,
-                builder: (conext, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasError) {
-                      return Center(child: Text('發生${snapshot.error}'));
-                    } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                      return _buildKeywords(snapshot.data as List<NewsKeyword>);
-                    } else {
-                      return const Center(child: Text('沒有資料'));
-                    }
-                  } else {
-                    return const Center(child: CupertinoActivityIndicator());
-                  }
-                }),
-          ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: Text('熱門新聞',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-          ),
-          FutureBuilder(
-              future: _posts,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    return Center(child: Text('發生${snapshot.error}'));
-                  } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                    return _buildPosts(snapshot.data as List<NewsPost>);
-                  } else {
-                    return const Center(child: Text('沒有資料'));
-                  }
-                } else {
-                  return const Center(child: CupertinoActivityIndicator());
-                }
-              })
-        ]));
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Text('熱門關鍵字',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                ),
+                SizedBox(
+                  height: 64,
+                  child: FutureBuilder(
+                      future: _keywords,
+                      builder: (conext, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.hasError) {
+                            return Center(child: Text('發生${snapshot.error}'));
+                          } else if (snapshot.hasData &&
+                              snapshot.data!.isNotEmpty) {
+                            return _buildKeywords(
+                                snapshot.data as List<NewsKeyword>);
+                          } else {
+                            return const Center(child: Text('沒有資料'));
+                          }
+                        } else {
+                          return const Center(
+                              child: CupertinoActivityIndicator());
+                        }
+                      }),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Text('熱門新聞',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                ),
+                FutureBuilder(
+                    future: _posts,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasError) {
+                          return Center(child: Text('發生${snapshot.error}'));
+                        } else if (snapshot.hasData &&
+                            snapshot.data!.isNotEmpty) {
+                          return _buildPosts(snapshot.data as List<NewsPost>);
+                        } else {
+                          return const Center(child: Text('沒有資料'));
+                        }
+                      } else {
+                        return const Center(
+                            child: CupertinoActivityIndicator());
+                      }
+                    })
+              ])),
+        ],
+      ),
+    );
   }
 }

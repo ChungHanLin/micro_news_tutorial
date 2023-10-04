@@ -13,6 +13,7 @@ class NewsPostCard extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
             color: CupertinoColors.white,
+            border: Border.all(color: CupertinoColors.systemGrey6),
             borderRadius: BorderRadius.circular(10),
             boxShadow: const [
               BoxShadow(

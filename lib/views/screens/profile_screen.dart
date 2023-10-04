@@ -5,6 +5,14 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverToBoxAdapter(child: Text('Profile Screen'));
+    return const CupertinoPageScaffold(
+        child: CustomScrollView(slivers: [
+      CupertinoSliverNavigationBar(
+          largeTitle: Text(
+            '個人資料',
+          ),
+          backgroundColor: CupertinoColors.white),
+      SliverToBoxAdapter(child: Text('Profile Screen'))
+    ]));
   }
 }

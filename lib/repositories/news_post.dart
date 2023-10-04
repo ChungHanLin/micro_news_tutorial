@@ -17,10 +17,11 @@ class NewsPostRepository {
     }
   }
 
-  Future<List<NewsPost>> getPosts({String query = ''}) async {
+  Future<List<NewsPost>> getPosts(
+      {String query = '', int page = 1, int limit = 20}) async {
     try {
-      final response =
-          await http.get(Uri.parse('http://localhost:3000/posts?q=$query'));
+      final response = await http.get(Uri.parse(
+          'http://localhost:3000/posts?q=$query&_page=$page&_limit=$limit'));
       if (response.statusCode == 200) {
         final List<dynamic> posts = jsonDecode(response.body);
         return posts.map((post) => NewsPost.fromJson(post)).toList();
