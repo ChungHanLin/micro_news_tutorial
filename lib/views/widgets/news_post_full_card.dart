@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:micro_news_tutorial/models/news_post.dart';
+import 'package:micro_news_tutorial/views/screens/post_screen.dart';
 
 class NewsPostFullCard extends StatelessWidget {
   final NewsPost post;
@@ -7,7 +8,15 @@ class NewsPostFullCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return CupertinoButton(
+        onPressed: () {
+          showCupertinoModalPopup(
+              context: context,
+              barrierColor: const Color.fromRGBO(0, 0, 0, 0.7),
+              builder: (BuildContext builder) {
+                return CupertinoPopupSurface(child: PostScreen(post: post));
+              });
+        },
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Container(
             padding: const EdgeInsets.all(14),
@@ -84,6 +93,7 @@ class NewsPostFullCard extends StatelessWidget {
                       fontSize: 17,
                       fontWeight: FontWeight.w500,
                       height: 1.2,
+                      color: CupertinoColors.black,
                       letterSpacing: 1.01)),
               const SizedBox(height: 8),
               Text(post.body,

@@ -66,6 +66,15 @@ class _HomeScreenState extends State<HomeScreen> {
               '焦點新聞',
             ),
             backgroundColor: CupertinoColors.white),
+        CupertinoSliverRefreshControl(onRefresh: () async {
+          final firstPagePosts =
+              await NewsPostRepository().getPosts(page: 1, limit: limit);
+          setState(() {
+            page = 1;
+            _posts = firstPagePosts;
+            firstPagePosts.length < limit ? isBottom = true : isBottom = false;
+          });
+        }),
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
           sliver: SliverToBoxAdapter(
