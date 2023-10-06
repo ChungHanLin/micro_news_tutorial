@@ -18,10 +18,21 @@ class NewsPostRepository {
   }
 
   Future<List<NewsPost>> getPosts(
-      {String query = '', int page = 1, int limit = 20}) async {
+      {String query = '',
+      String source = '',
+      String category = '',
+      int page = 1,
+      int limit = 20}) async {
     try {
-      final response = await http.get(Uri.parse(
-          'http://localhost:3000/posts?q=$query&_page=$page&_limit=$limit'));
+      String url =
+          'http://localhost:3000/posts?q=$query&_page=$page&_limit=$limit';
+      if (source.isNotEmpty) {
+        url += '&source.name=$source';
+      }
+      if (category.isNotEmpty) {
+        url += '&category=$category';
+      }
+      final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         final List<dynamic> posts = jsonDecode(response.body);
         return posts.map((post) => NewsPost.fromJson(post)).toList();

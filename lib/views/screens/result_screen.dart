@@ -4,8 +4,10 @@ import 'package:micro_news_tutorial/repositories/news_post.dart';
 import 'package:micro_news_tutorial/views/widgets/news_post_card.dart';
 
 class ResultScreen extends StatefulWidget {
-  final String query;
-  const ResultScreen({super.key, required this.query});
+  final String? query;
+  final String? source;
+  final String? category;
+  const ResultScreen({super.key, this.query, this.source, this.category});
 
   @override
   State<ResultScreen> createState() => _ResultScreenState();
@@ -14,10 +16,27 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   late Future<List<NewsPost>> _posts;
 
+  Widget getNavigationBarTitle() {
+    var style = CupertinoTheme.of(context)
+        .textTheme
+        .navLargeTitleTextStyle
+        .copyWith(fontSize: 20);
+    if (widget.query != null) {
+      return Text(widget.query!, style: style);
+    } else if (widget.category != null) {
+      return Text(widget.category!, style: style);
+    } else {
+      return Row(
+        children: [
+          Text(widget.source!, style: style),
+        ],
+      );
+    }
+  }
+
   Widget _buildPosts(List<NewsPost> posts) {
     return ListView.builder(
         padding: EdgeInsets.zero,
-        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: posts.length,
         itemBuilder: (conext, index) {
@@ -28,18 +47,20 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   void initState() {
     super.initState();
-    _posts = NewsPostRepository().getPosts(query: widget.query);
+    if (widget.source != null) {
+      _posts = NewsPostRepository().getPosts(source: widget.source!);
+    } else if (widget.category != null) {
+      _posts = NewsPostRepository().getPosts(category: widget.category!);
+    } else {
+      _posts = NewsPostRepository().getPosts(query: widget.query!);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          middle: Text(widget.query,
-              style: CupertinoTheme.of(context)
-                  .textTheme
-                  .navLargeTitleTextStyle
-                  .copyWith(fontSize: 20)),
+          middle: getNavigationBarTitle(),
           previousPageTitle: '搜尋',
         ),
         child: FutureBuilder(

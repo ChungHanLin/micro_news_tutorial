@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:micro_news_tutorial/models/news_source.dart';
+import 'package:micro_news_tutorial/views/screens/result_screen.dart';
 
 class NewsSourceRowButton extends StatelessWidget {
   final NewsSource source;
@@ -8,7 +9,10 @@ class NewsSourceRowButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoListTile(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(CupertinoPageRoute(
+              builder: (context) => ResultScreen(source: source.name)));
+        },
         title: Text(source.name,
             style: const TextStyle(
               fontSize: 18,
@@ -34,7 +38,10 @@ class NewsSourceRowButton extends StatelessWidget {
         trailing: SizedBox(
           height: 30,
           child: CupertinoButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(CupertinoPageRoute(
+                  builder: (context) => ResultScreen(source: source.name)));
+            },
             color: CupertinoColors.systemGrey6,
             padding: const EdgeInsets.symmetric(horizontal: 12),
             borderRadius: BorderRadius.circular(30),
