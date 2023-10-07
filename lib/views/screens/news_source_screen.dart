@@ -37,6 +37,8 @@ class _NewsSourceScreenState extends State<NewsSourceScreen> {
                 .navLargeTitleTextStyle
                 .copyWith(fontSize: 20)),
         previousPageTitle: '探索',
+        backgroundColor: const CupertinoDynamicColor.withBrightness(
+            color: CupertinoColors.white, darkColor: CupertinoColors.black),
       ),
       child: FutureBuilder(
           future: _sources,

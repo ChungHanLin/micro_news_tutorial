@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:micro_news_tutorial/styles.dart';
 import 'package:micro_news_tutorial/views/screens/result_screen.dart';
 
 class NewsKeywordButton extends StatelessWidget {
@@ -19,8 +20,9 @@ class NewsKeywordButton extends StatelessWidget {
           ),
         );
       },
-      child:
-          Text(keyword, style: const TextStyle(color: CupertinoColors.black)),
+      child: Text(keyword,
+          style: TextStyle(
+              color: CupertinoTheme.of(context).textTheme.textStyle.color)),
     );
   }
 }

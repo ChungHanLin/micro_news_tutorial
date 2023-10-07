@@ -68,7 +68,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: const BoxDecoration(
-                      color: CupertinoColors.systemGroupedBackground,
+                      color: CupertinoDynamicColor.withBrightness(
+                          color: CupertinoColors.systemGroupedBackground,
+                          darkColor: Color.fromRGBO(50, 50, 50, 0.8)),
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                 ),
                 const SizedBox(height: 12),
@@ -79,7 +81,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: const BoxDecoration(
-                      color: CupertinoColors.systemGroupedBackground,
+                      color: CupertinoDynamicColor.withBrightness(
+                          color: CupertinoColors.systemGroupedBackground,
+                          darkColor: Color.fromRGBO(50, 50, 50, 0.8)),
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                 ),
                 const SizedBox(height: 0),
@@ -127,7 +131,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ));
                       },
-                      color: CupertinoColors.systemGroupedBackground,
+                      color: const CupertinoDynamicColor.withBrightness(
+                          color: CupertinoColors.systemGroupedBackground,
+                          darkColor: Color.fromRGBO(50, 50, 50, 0.8)),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 12),
                       borderRadius: BorderRadius.circular(10),

@@ -60,7 +60,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: const BoxDecoration(
-                    color: CupertinoColors.systemGroupedBackground,
+                    color: CupertinoDynamicColor.withBrightness(
+                        color: CupertinoColors.systemGroupedBackground,
+                        darkColor: Color.fromRGBO(50, 50, 50, 0.8)),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
               ),
               const SizedBox(height: 24),

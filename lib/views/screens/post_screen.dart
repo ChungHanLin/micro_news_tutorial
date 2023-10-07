@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:micro_news_tutorial/models/news_post.dart';
+import 'package:micro_news_tutorial/styles.dart';
 
 class PostScreen extends StatelessWidget {
   final NewsPost post;
@@ -10,7 +11,7 @@ class PostScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         height: MediaQuery.of(context).size.height * 0.8,
-        color: CupertinoColors.white,
+        color: ThemeColor.backGround.resolveFrom(context),
         child: Column(children: [
           Container(
               height: MediaQuery.of(context).size.height * 0.3,
@@ -72,17 +73,17 @@ class PostScreen extends StatelessWidget {
                           style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
-                              color: Color.fromRGBO(0, 0, 0, 0.8)),
+                              color: CupertinoColors.systemGrey),
                         )
                       ],
                     ),
                     const SizedBox(height: 8),
                     Text(post.body,
                         style: const TextStyle(
-                            fontSize: 18,
-                            height: 1.5,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(0, 0, 0, 0.8))),
+                          fontSize: 18,
+                          height: 1.5,
+                          fontWeight: FontWeight.w400,
+                        )),
                   ],
                 ),
               ),

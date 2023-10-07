@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:micro_news_tutorial/styles.dart';
 import 'package:micro_news_tutorial/views/screens/browse_screen.dart';
 import 'package:micro_news_tutorial/views/screens/home_screen.dart';
 import 'package:micro_news_tutorial/views/screens/profile_screen.dart';

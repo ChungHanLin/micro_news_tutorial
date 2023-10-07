@@ -75,7 +75,8 @@ class _BrowseScreenState extends State<BrowseScreen> {
           largeTitle: Text(
             '探索',
           ),
-          backgroundColor: CupertinoColors.white),
+          backgroundColor: CupertinoDynamicColor.withBrightness(
+              color: CupertinoColors.white, darkColor: CupertinoColors.black)),
       SliverToBoxAdapter(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Padding(
@@ -114,15 +115,18 @@ class _BrowseScreenState extends State<BrowseScreen> {
                 return const NewsSourceScreen();
               }));
             },
-            child: const Row(
+            child: Row(
               children: [
                 Text('新聞來源',
                     style: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: CupertinoColors.black)),
-                SizedBox(width: 4),
-                Icon(CupertinoIcons.forward,
+                        color: CupertinoTheme.of(context)
+                            .textTheme
+                            .textStyle
+                            .color,
+                        fontWeight: FontWeight.w500)),
+                const SizedBox(width: 4),
+                const Icon(CupertinoIcons.forward,
                     size: 22, color: CupertinoColors.systemGrey),
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:micro_news_tutorial/models/news_post.dart';
+import 'package:micro_news_tutorial/styles.dart';
 import 'package:micro_news_tutorial/views/screens/post_screen.dart';
 
 class NewsPostFullCard extends StatelessWidget {
@@ -21,7 +22,7 @@ class NewsPostFullCard extends StatelessWidget {
         child: Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-                color: CupertinoColors.white,
+                color: ThemeColor.backGround.resolveFrom(context),
                 border: Border.all(color: CupertinoColors.systemGrey5),
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: const [
@@ -69,7 +70,7 @@ class NewsPostFullCard extends StatelessWidget {
                         style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(0, 0, 0, 0.8)),
+                            color: CupertinoColors.systemGrey),
                       )
                     ],
                   ),
@@ -89,20 +90,20 @@ class NewsPostFullCard extends StatelessWidget {
               const SizedBox(height: 8),
               Text(post.title,
                   maxLines: 2,
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w500,
                       height: 1.2,
-                      color: CupertinoColors.black,
+                      color: ThemeColor.text.resolveFrom(context),
                       letterSpacing: 1.01)),
               const SizedBox(height: 8),
               Text(post.body,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                       height: 1.2,
                       fontSize: 14,
-                      color: Color.fromRGBO(0, 0, 0, 0.8))),
+                      color: ThemeColor.text.resolveFrom(context))),
             ])));
   }
 }

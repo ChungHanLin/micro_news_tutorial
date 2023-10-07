@@ -65,7 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
             largeTitle: Text(
               '焦點新聞',
             ),
-            backgroundColor: CupertinoColors.white),
+            backgroundColor: CupertinoDynamicColor.withBrightness(
+                color: CupertinoColors.white,
+                darkColor: CupertinoColors.black)),
         CupertinoSliverRefreshControl(onRefresh: () async {
           final firstPagePosts =
               await NewsPostRepository().getPosts(page: 1, limit: limit);

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:micro_news_tutorial/models/theme.dart';
 import 'package:micro_news_tutorial/views/widgets/profile_card.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -10,10 +12,10 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _isDailyReport = false;
-  bool _isDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
+    final ThemeModel themeModel = Provider.of<ThemeModel>(context);
     return CupertinoPageScaffold(
         backgroundColor: CupertinoColors.systemGroupedBackground,
         child: CustomScrollView(slivers: [
@@ -68,11 +70,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 color: CupertinoColors.white, size: 20),
                           )),
                       trailing: CupertinoSwitch(
-                          value: _isDarkMode,
+                          value: themeModel.isDark,
                           onChanged: (bool? value) {
-                            setState(() {
-                              _isDarkMode = value!;
-                            });
+                            themeModel.toggleTheme();
                           })),
                 ],
               ),

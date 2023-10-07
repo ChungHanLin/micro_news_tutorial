@@ -68,7 +68,9 @@ class _SearchScreenState extends State<SearchScreen> {
               largeTitle: Text(
                 '搜尋',
               ),
-              backgroundColor: CupertinoColors.white),
+              backgroundColor: CupertinoDynamicColor.withBrightness(
+                  color: CupertinoColors.white,
+                  darkColor: CupertinoColors.black)),
           SliverToBoxAdapter(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,

@@ -26,11 +26,7 @@ class _ResultScreenState extends State<ResultScreen> {
     } else if (widget.category != null) {
       return Text(widget.category!, style: style);
     } else {
-      return Row(
-        children: [
-          Text(widget.source!, style: style),
-        ],
-      );
+      return Text(widget.source!, style: style);
     }
   }
 
@@ -62,6 +58,8 @@ class _ResultScreenState extends State<ResultScreen> {
         navigationBar: CupertinoNavigationBar(
           middle: getNavigationBarTitle(),
           previousPageTitle: '搜尋',
+          backgroundColor: const CupertinoDynamicColor.withBrightness(
+              color: CupertinoColors.white, darkColor: CupertinoColors.black),
         ),
         child: FutureBuilder(
             future: _posts,
