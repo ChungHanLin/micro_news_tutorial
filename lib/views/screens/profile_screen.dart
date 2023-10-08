@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:micro_news_tutorial/models/theme.dart';
+import 'package:micro_news_tutorial/plugins/notification.dart';
 import 'package:micro_news_tutorial/views/widgets/profile_card.dart';
 import 'package:provider/provider.dart';
 
@@ -54,6 +56,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       trailing: CupertinoSwitch(
                           value: _isDailyReport,
                           onChanged: (bool? value) {
+                            if (value == true) {
+                              NotificationPlugin().showPeriodicNotification(
+                                interval: RepeatInterval.everyMinute,
+                              );
+                            }
                             setState(() {
                               _isDailyReport = value!;
                             });

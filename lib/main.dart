@@ -1,15 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:micro_news_tutorial/models/theme.dart';
+import 'package:micro_news_tutorial/plugins/notification.dart';
 import 'package:micro_news_tutorial/views/screens/login_screen.dart';
 import 'package:micro_news_tutorial/views/screens/tab_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:micro_news_tutorial/firebase_options.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('Asia/Taipei'));
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await NotificationPlugin().init();
   runApp(ChangeNotifierProvider(
       create: (context) => ThemeModel(), child: const MyApp()));
 }
