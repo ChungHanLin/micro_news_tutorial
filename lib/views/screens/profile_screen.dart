@@ -58,8 +58,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onChanged: (bool? value) {
                             if (value == true) {
                               NotificationPlugin().showPeriodicNotification(
-                                interval: RepeatInterval.everyMinute,
-                              );
+                                  title: '每日一報',
+                                  body: '我們為您準備好了專屬於您的新聞，歡迎您來看看！',
+                                  interval: RepeatInterval.daily);
                             }
                             setState(() {
                               _isDailyReport = value!;
