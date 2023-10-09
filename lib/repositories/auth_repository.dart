@@ -92,6 +92,7 @@ class AuthRepository {
             accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
 
         await FirebaseAuth.instance.signInWithCredential(credential);
+
         return true;
       }
       throw Exception("登錄失敗");

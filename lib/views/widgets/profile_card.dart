@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:micro_news_tutorial/views/screens/account_screen.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({super.key});
@@ -21,7 +22,12 @@ class ProfileCard extends StatelessWidget {
             ),
             trailing: const Icon(CupertinoIcons.right_chevron,
                 size: 20, color: CupertinoColors.systemGrey),
-            onTap: () async {}),
+            onTap: () async {
+              Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) => const AccountScreen()));
+            }),
       ],
     );
   }

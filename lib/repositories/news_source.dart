@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:micro_news_tutorial/models/news_source.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
