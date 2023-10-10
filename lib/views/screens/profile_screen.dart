@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:micro_news_tutorial/models/theme.dart';
@@ -23,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: CustomScrollView(slivers: [
           const CupertinoSliverNavigationBar(
             largeTitle: Text(
-              '個人資料',
+              '個人檔案',
             ),
             backgroundColor: CupertinoColors.systemGroupedBackground,
             border: null,
@@ -82,6 +83,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onChanged: (bool? value) {
                             themeModel.toggleTheme();
                           })),
+                  CupertinoListTile.notched(
+                      title: const Text('登出'),
+                      leading: DecoratedBox(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: CupertinoColors.systemGrey),
+                          child: const Padding(
+                            padding: EdgeInsets.all(4),
+                            child: Icon(CupertinoIcons.arrow_right_to_line,
+                                color: CupertinoColors.white, size: 20),
+                          )),
+                      onTap: () {
+                        FirebaseAuth.instance.signOut();
+                      }),
                 ],
               ),
             ],

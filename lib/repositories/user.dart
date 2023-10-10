@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:micro_news_tutorial/models/user.dart';
 
 class UserRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   Future<UserModel> getUser(String userId) async {
     try {
@@ -38,5 +41,12 @@ class UserRepository {
       'description': description,
       'avatar': avatar,
     }).whenComplete(() => print('使用者更新資料庫成功'));
+  }
+
+  Future<String> uploadImageToStorage(String child, Uint8List file) async {
+    Reference ref = _storage.ref().child(child);
+    UploadTask uploadTask = ref.putData(file);
+    TaskSnapshot snapshot = await uploadTask;
+    return await snapshot.ref.getDownloadURL();
   }
 }

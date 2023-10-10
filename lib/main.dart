@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:micro_news_tutorial/models/theme.dart';
 import 'package:micro_news_tutorial/plugins/notification.dart';
 import 'package:micro_news_tutorial/repositories/user.dart';
+import 'package:micro_news_tutorial/views/screens/account_screen.dart';
 import 'package:micro_news_tutorial/views/screens/login_screen.dart';
 import 'package:micro_news_tutorial/views/screens/tab_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
