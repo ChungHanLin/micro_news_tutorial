@@ -1,12 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:micro_news_tutorial/models/theme.dart';
 import 'package:micro_news_tutorial/plugins/notification.dart';
-import 'package:micro_news_tutorial/repositories/user.dart';
-import 'package:micro_news_tutorial/views/screens/account_screen.dart';
-import 'package:micro_news_tutorial/views/screens/login_screen.dart';
-import 'package:micro_news_tutorial/views/screens/tab_layout.dart';
+import 'package:micro_news_tutorial/views/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:micro_news_tutorial/firebase_options.dart';
 import 'package:provider/provider.dart';
@@ -57,27 +52,6 @@ class MyApp extends StatelessWidget {
           barBackgroundColor: const CupertinoDynamicColor.withBrightness(
               color: CupertinoColors.white, darkColor: CupertinoColors.black),
         ),
-        home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                // 進入前先檢查 firestore 中是否有資料，若無則新增
-                final user = FirebaseAuth.instance.currentUser;
-                final userRepository = UserRepository();
-
-                // 檢查 firestore 中是否有資料
-                userRepository
-                    .getUser(user!.uid)
-                    .then((value) {})
-                    .catchError((error) {
-                  // 若無則新增
-                  userRepository.createUser(user);
-                });
-
-                return const TabLayout();
-              } else {
-                return const LoginScreen();
-              }
-            }));
+        home: const SplashScreen());
   }
 }

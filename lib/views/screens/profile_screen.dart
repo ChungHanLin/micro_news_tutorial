@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:micro_news_tutorial/models/theme.dart';
 import 'package:micro_news_tutorial/plugins/notification.dart';
+import 'package:micro_news_tutorial/views/screens/dummy_screen.dart';
 import 'package:micro_news_tutorial/views/widgets/profile_card.dart';
 import 'package:provider/provider.dart';
 
@@ -96,6 +97,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           )),
                       onTap: () {
                         FirebaseAuth.instance.signOut();
+                        Navigator.of(context).pushReplacement(
+                            CupertinoPageRoute(builder: (context) {
+                          return const DummyScreen();
+                        }));
                       }),
                 ],
               ),

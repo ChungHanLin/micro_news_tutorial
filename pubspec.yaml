@@ -45,6 +45,8 @@ dependencies:
   image_picker: ^1.0.4
   cloud_firestore: ^4.9.3
   firebase_storage: ^11.2.8
+  smooth_page_indicator: ^1.1.0
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -74,7 +76,9 @@ flutter:
     - assets/images/google.png
     - assets/images/apple.png
     - assets/images/email.png
-
+    - assets/images/news.png
+    - assets/images/calendar.png
+    - assets/images/notification.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

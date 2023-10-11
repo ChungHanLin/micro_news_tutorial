@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:micro_news_tutorial/repositories/auth_repository.dart';
 import 'package:micro_news_tutorial/views/screens/register_screen.dart';
 import 'package:micro_news_tutorial/views/screens/forget_password_screen.dart';
+import 'package:micro_news_tutorial/views/screens/tab_layout.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -180,7 +181,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(width: 24),
                   CupertinoButton(
                     onPressed: () {
-                      AuthRepository().signInWithGoogle(context: context);
+                      AuthRepository()
+                          .signInWithGoogle(context: context)
+                          .then((value) {
+                        if (value == true) {
+                          Navigator.of(context).pushReplacement(
+                              CupertinoPageRoute(builder: (context) {
+                            return const TabLayout();
+                          }));
+                        }
+                      });
                     },
                     padding: const EdgeInsets.all(0),
                     child: Container(
