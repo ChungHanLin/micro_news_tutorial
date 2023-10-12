@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:micro_news_tutorial/l10n/l10n.dart';
+import 'package:micro_news_tutorial/models/locale.dart';
 import 'package:micro_news_tutorial/models/theme.dart';
 import 'package:micro_news_tutorial/plugins/notification.dart';
 import 'package:micro_news_tutorial/views/screens/splash_screen.dart';
@@ -7,6 +9,8 @@ import 'package:micro_news_tutorial/firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,8 +18,10 @@ void main() async {
   tz.setLocalLocation(tz.getLocation('Asia/Taipei'));
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await NotificationPlugin().init();
-  runApp(ChangeNotifierProvider(
-      create: (context) => ThemeModel(), child: const MyApp()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => ThemeModel()),
+    ChangeNotifierProvider(create: (_) => LocaleModel()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,8 +31,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeModel = Provider.of<ThemeModel>(context);
+    final localeModel = Provider.of<LocaleModel>(context);
     return CupertinoApp(
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate
+        ],
+        supportedLocales: L10n.all,
+        locale: localeModel.locale,
         theme: CupertinoThemeData(
           brightness: themeModel.isDark ? Brightness.dark : Brightness.light,
           textTheme: const CupertinoTextThemeData(

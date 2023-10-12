@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:micro_news_tutorial/l10n/l10n.dart';
+import 'package:micro_news_tutorial/models/locale.dart';
 import 'package:micro_news_tutorial/models/theme.dart';
 import 'package:micro_news_tutorial/plugins/notification.dart';
 import 'package:micro_news_tutorial/views/screens/dummy_screen.dart';
 import 'package:micro_news_tutorial/views/widgets/profile_card.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -16,16 +19,39 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _isDailyReport = false;
+  int _selectedLocale = 0;
+
+  void _showPicker(Widget child) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 216,
+        padding: const EdgeInsets.only(top: 6.0),
+        // The Bottom margin is provided to align the popup above the system navigation bar.
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        // Provide a background color for the popup.
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        // Use a SafeArea widget to avoid system overlaps.
+        child: SafeArea(
+          top: false,
+          child: child,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final ThemeModel themeModel = Provider.of<ThemeModel>(context);
+    final LocaleModel localeModel = Provider.of<LocaleModel>(context);
     return CupertinoPageScaffold(
         backgroundColor: CupertinoColors.systemGroupedBackground,
         child: CustomScrollView(slivers: [
-          const CupertinoSliverNavigationBar(
+          CupertinoSliverNavigationBar(
             largeTitle: Text(
-              '個人檔案',
+              AppLocalizations.of(context)!.profile_title,
             ),
             backgroundColor: CupertinoColors.systemGroupedBackground,
             border: null,
@@ -35,17 +61,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               const ProfileCard(),
               CupertinoListSection.insetGrouped(
-                header: const Padding(
-                  padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
-                  child: Text('一般設定',
-                      style: TextStyle(
+                header: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+                  child: Text(AppLocalizations.of(context)!.general_setting,
+                      style: const TextStyle(
                           fontSize: 14,
                           color: CupertinoColors.systemGrey,
                           fontWeight: FontWeight.w500)),
                 ),
                 children: [
                   CupertinoListTile.notched(
-                      title: const Text('每日一報'),
+                      title: Text(AppLocalizations.of(context)!.notification),
                       leading: DecoratedBox(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
@@ -69,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             });
                           })),
                   CupertinoListTile.notched(
-                      title: const Text('夜間模式'),
+                      title: Text(AppLocalizations.of(context)!.dark_mode),
                       leading: DecoratedBox(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
@@ -85,7 +111,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             themeModel.toggleTheme();
                           })),
                   CupertinoListTile.notched(
-                      title: const Text('登出'),
+                      onTap: () {
+                        _showPicker(CupertinoPicker(
+                            magnification: 1.22,
+                            squeeze: 1.2,
+                            useMagnifier: true,
+                            itemExtent: 32.0,
+                            scrollController: FixedExtentScrollController(
+                              initialItem: _selectedLocale,
+                            ),
+                            onSelectedItemChanged: (int selectedItem) {
+                              setState(() {
+                                _selectedLocale = selectedItem;
+                              });
+                              localeModel.setLocale(L10n.all[selectedItem]);
+                              // print(_sclectedLocale)
+                            },
+                            children: List<Widget>.generate(
+                                L10n.languages.length, (int index) {
+                              return Center(child: Text(L10n.languages[index]));
+                            })));
+                      },
+                      title: Text(AppLocalizations.of(context)!.language),
+                      leading: DecoratedBox(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: CupertinoColors.systemGreen),
+                          child: const Padding(
+                            padding: EdgeInsets.all(4),
+                            child: Icon(CupertinoIcons.t_bubble_fill,
+                                color: CupertinoColors.white, size: 20),
+                          )),
+                      trailing: Text(L10n.languages[_selectedLocale])),
+                  CupertinoListTile.notched(
+                      title: Text(AppLocalizations.of(context)!.sign_out),
                       leading: DecoratedBox(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),

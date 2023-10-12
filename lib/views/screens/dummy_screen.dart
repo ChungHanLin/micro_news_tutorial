@@ -25,10 +25,8 @@ class DummyScreen extends StatelessWidget {
               // 若無則新增
               userRepository.createUser(user);
             });
-            print('snapshot.hasData');
             return const TabLayout();
           } else {
-            print('snapshot.hasNoData');
             return const LoginScreen();
           }
         });

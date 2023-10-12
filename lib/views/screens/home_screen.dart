@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:micro_news_tutorial/models/news_post.dart';
 import 'package:micro_news_tutorial/repositories/news_post.dart';
 import 'package:micro_news_tutorial/views/widgets/news_post_full_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -61,11 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       child: CustomScrollView(controller: _scrollController, slivers: [
-        const CupertinoSliverNavigationBar(
+        CupertinoSliverNavigationBar(
             largeTitle: Text(
-              '焦點新聞',
+              AppLocalizations.of(context)!.home_title,
             ),
-            backgroundColor: CupertinoDynamicColor.withBrightness(
+            backgroundColor: const CupertinoDynamicColor.withBrightness(
                 color: CupertinoColors.white,
                 darkColor: CupertinoColors.black)),
         CupertinoSliverRefreshControl(onRefresh: () async {
