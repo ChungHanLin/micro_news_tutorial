@@ -5,6 +5,7 @@ import 'package:micro_news_tutorial/repositories/news_keyword.dart';
 import 'package:micro_news_tutorial/repositories/news_post.dart';
 import 'package:micro_news_tutorial/views/widgets/news_keyword_button.dart';
 import 'package:micro_news_tutorial/views/widgets/news_post_card.dart';
+import 'package:home_widget/home_widget.dart';
 
 import 'result_screen.dart';
 

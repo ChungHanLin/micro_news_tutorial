@@ -1,8 +1,13 @@
 import 'package:flutter/cupertino.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:micro_news_tutorial/models/news_post.dart';
 import 'package:micro_news_tutorial/repositories/news_post.dart';
 import 'package:micro_news_tutorial/views/widgets/news_post_full_card.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+const String appGroupId = 'group.microNewsTutorial';
+const String iOSWidgetName = 'MicroNewsWidget';
+const String androidWidgetName = 'MicroNewsWidget';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,10 +23,25 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<NewsPost> _posts = [];
   final ScrollController _scrollController = ScrollController();
 
+  void updateHomeWidget(List<NewsPost> posts) {
+    final List<Map<String, String>> postsData = posts
+        .map((post) => {
+              'title': post.title,
+              'cover': post.cover,
+              'source': post.source.name,
+            })
+        .toList();
+    HomeWidget.saveWidgetData('posts', postsData);
+    HomeWidget.updateWidget(
+      iOSName: iOSWidgetName,
+      androidName: androidWidgetName,
+    );
+  }
+
   @override
   void initState() {
     super.initState();
-
+    HomeWidget.setAppGroupId(appGroupId);
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
               _scrollController.position.maxScrollExtent &&
@@ -30,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
     NewsPostRepository().getPosts(page: page, limit: limit).then((value) {
+      updateHomeWidget(value);
       setState(() {
         value.length < limit ? isBottom = true : isBottom = false;
         _posts = value;
