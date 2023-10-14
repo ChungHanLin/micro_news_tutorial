@@ -3,8 +3,8 @@
 
     <application
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
-        android:label="micro_news_tutorial">
+        android:icon="@mipmap/launcher_icon"
+        android:label="Micro News">
         <receiver
             android:name=".MicroNewsWidget"
             android:exported="false">
